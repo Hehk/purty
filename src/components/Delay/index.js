@@ -1,9 +1,10 @@
 import React from 'react';
+import types from 'prop-types'
 
 class Delay extends React.Component {
   static propTypes = {
-    wait: React.PropTypes.number.isRequired,
-    loadElem: React.PropTypes.node,
+    wait: types.number.isRequired,
+    loadElem: types.node,
   }
 
   state = {

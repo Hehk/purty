@@ -1,10 +1,27 @@
 import React from 'react';
-import { reverse, map, slice } from 'lodash';
-import PageCard from '../PageCard';
+import history from '../../utils/history';
 
 class PageCardList extends React.Component {
   state = {
     selected: -1,
+    curPath: '',
+  }
+
+  componentWillMount() {
+    // setting path to current location
+    this.setPath(history.location)
+
+    // adding listener to page change
+    history.listen(this.setPath);
+  }
+
+  setPath = (location) => {
+    const curPath = location.pathname;
+    const selected = this.props.children.findIndex(
+      child => child.props.path === curPath
+    );
+
+    this.setState({ curPath, selected });
   }
 
   changeSelection = (index) => {
@@ -16,10 +33,13 @@ class PageCardList extends React.Component {
     return this.setState({ selected: index });
   }
 
-  getCardState = (index, selected) => {
-    if (selected === -1) {
+  getCardState = (index, path) => {
+    const { curPath, selected } = this.state;
+    console.log('path', path, 'curPath', curPath);
+
+    if (curPath === '/menu') {
       return 'open';
-    } else if (index === selected) {
+    } else if (curPath === path) {
       return 'selected';
     } else if (index > selected) {
       return 'down';
@@ -29,29 +49,17 @@ class PageCardList extends React.Component {
   }
 
   render() {
-    const { cards, children } = this.props;
-    const { selected } = this.state;
+    const { children } = this.props;
 
     return (
       <div>
         {React.Children.map(children, (child, index) =>
           React.cloneElement(child, {
             index,
-            state: this.getCardState(index, selected),
+            state: this.getCardState(index, child.props.path),
             onClick: () => this.changeSelection(index),
           })
         )}
-        {/* {map(reverse(slice(cards)), ({ name, content }, index) =>
-          <PageCard
-            index={index}
-            state={this.getCardState(index, selected)}
-            onClick={() => this.changeSelection(index)}
-            name={name}
-            key={name}
-          >
-            {content}
-          </PageCard>
-        )} */}
       </div>
     );
   }

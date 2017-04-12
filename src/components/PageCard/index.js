@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
+import history from '../../utils/history';
+
 import Hamburger from '../Hamburger';
-import PageCardContent from '../PageCardContent';
-import Delay from '../Delay';
-import Wrapper from './Wrapper';
-import Header from './Header';
+
+import Header    from './Header';
+import Content   from './Content';
+import Wrapper   from './Wrapper';
 
 class PageCard extends Component {
   shouldComponentUpdate(newProps) {
     return true;
+  }
+
+  createRedirect = (path) => () => {
+    history.push(path);
   }
 
   isSelected = () => {
@@ -15,27 +21,21 @@ class PageCard extends Component {
   }
 
   render() {
-    const { index, state, onClick, name, children } = this.props;
+    const { index, state, name, path } = this.props;
     const isSelected = this.isSelected();
 
     return (
-      <Wrapper index={index} state={state} onClick={isSelected ? undefined : onClick}>
+      <Wrapper index={index} state={state} onClick={isSelected ? undefined : this.createRedirect(path)}>
 
         <Header>
-          <Hamburger onClick={isSelected ? onClick : undefined} isVisible={isSelected}/>
+          <Hamburger onClick={isSelected ? this.createRedirect('/menu') : undefined} isVisible={isSelected}/>
           {name}
         </Header>
 
-        <PageCardContent isVisible={isSelected}>
+        <Content isVisible={isSelected}>
           {name}
-        </PageCardContent>
+        </Content>
 
-      </Wrapper>
-    );
-
-    return (
-      <Wrapper index={index} state={state} onClick={onClick}>
-        <Header>{name}</Header>
       </Wrapper>
     );
   }
