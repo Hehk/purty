@@ -56,8 +56,7 @@ class PageCardList extends React.Component {
           React.cloneElement(child, {
             index,
             state: this.getCardState(index, child.props.path),
-            onClick: () => this.changeSelection(index),
-          })
+          }),
         )}
       </div>
     );

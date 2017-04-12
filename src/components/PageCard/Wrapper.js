@@ -24,7 +24,6 @@ const Wrapper = styled.section`
 
   text-align: left;
   font-size: ${fontSize}rem;
-  text-transform: uppercase;
   color: #F7F6F0;
   background-color: ${getColor};
 

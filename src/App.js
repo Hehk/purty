@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PageCardList from './components/PageCardList';
 import PageCard from './components/PageCard';
+import HomePage from './components/HomePage';
 import './App.css';
 
 class App extends Component {
@@ -16,8 +17,8 @@ class App extends Component {
         <PageCard name="About" path="/about">
           test
         </PageCard>
-        <PageCard name="Home" path="/">
-          test
+        <PageCard name="Home" path="/" main>
+          <HomePage />
         </PageCard>
       </PageCardList>
     );

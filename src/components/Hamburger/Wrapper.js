@@ -11,6 +11,7 @@ const notLoaded = `
 `;
 
 const Wrapper = styled.div`
+  margin-top: 0.25rem;
   height: 1.5rem;
   border-radius: 2px;
 
