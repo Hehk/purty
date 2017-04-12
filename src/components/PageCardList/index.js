@@ -35,7 +35,6 @@ class PageCardList extends React.Component {
 
   getCardState = (index, path) => {
     const { curPath, selected } = this.state;
-    console.log('path', path, 'curPath', curPath);
 
     if (curPath === '/menu') {
       return 'open';
